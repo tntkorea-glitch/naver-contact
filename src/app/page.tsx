@@ -47,7 +47,7 @@ export default function Home() {
   };
 
   // 연락처 저장
-  const handleSave = async (data: Partial<Contact> & { groups?: string[] }) => {
+  const handleSave = async (data: Omit<Partial<Contact>, 'groups'> & { groups?: string[] }) => {
     if (editingContact) {
       await fetch(`/api/contacts/${editingContact.id}`, {
         method: 'PUT',
