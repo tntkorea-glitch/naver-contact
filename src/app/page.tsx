@@ -18,7 +18,7 @@ export default function Home() {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [selectedGroup, setSelectedGroup] = useState('');
   const [showFavorites, setShowFavorites] = useState(false);
-  const searchTimer = useRef<ReturnType<typeof setTimeout>>();
+  const searchTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   // UI 상태
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
