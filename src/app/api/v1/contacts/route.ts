@@ -16,13 +16,26 @@ export async function GET(request: NextRequest) {
   const search = sp.get('search') || '';
   const groupId = sp.get('group_id') || '';
   const favoriteOnly = sp.get('favorite') === 'true';
+  const trashOnly = sp.get('trash') === 'true';
+  const noNameOnly = sp.get('no_name') === 'true';
   const offset = (page - 1) * limit;
 
   let query = supabase
     .from('contacts')
     .select('*, contact_groups(group_id)', { count: 'exact' })
-    .eq('user_id', user!.id)
-    .is('deleted_at', null);
+    .eq('user_id', user!.id);
+
+  // 휴지통 vs 일반
+  if (trashOnly) {
+    query = query.not('deleted_at', 'is', null);
+  } else {
+    query = query.is('deleted_at', null);
+  }
+
+  // 이름없는 연락처
+  if (noNameOnly) {
+    query = query.eq('first_name', '').eq('last_name', '');
+  }
 
   if (search) {
     query = query.or(
