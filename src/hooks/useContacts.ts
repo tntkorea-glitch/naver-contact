@@ -21,6 +21,7 @@ export function useContacts(options: UseContactsOptions = {}) {
   const {
     page = 1, limit = 30, sortField = 'last_name',
     sortDirection = 'asc', search = '', groupId = '', favoriteOnly = false,
+    trashOnly = false, noNameOnly = false,
   } = options;
 
   const [contacts, setContacts] = useState<Contact[]>([]);
