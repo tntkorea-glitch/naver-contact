@@ -13,6 +13,8 @@ interface UseContactsOptions {
   search?: string;
   groupId?: string;
   favoriteOnly?: boolean;
+  trashOnly?: boolean;
+  noNameOnly?: boolean;
 }
 
 export function useContacts(options: UseContactsOptions = {}) {
