@@ -122,9 +122,14 @@ function ContactsApp() {
     if (token) headers['Authorization'] = `Bearer ${token}`;
     const res = await fetch('/api/v1/contacts/import', { method: 'POST', headers, body: formData });
     const data = await res.json();
-    alert(`${data.data?.imported || 0}개의 연락처를 가져왔습니다.`);
+    if (data.data?.groups_created !== undefined) {
+      alert(`연락처 ${data.data.imported}개, 그룹 ${data.data.groups_created}개 가져왔습니다.`);
+    } else {
+      alert(`${data.data?.imported || 0}개의 연락처를 가져왔습니다.`);
+    }
     setShowImport(false);
     fetchContacts();
+    fetchGroups();
   };
 
   const handleCheckDuplicates = async () => {
