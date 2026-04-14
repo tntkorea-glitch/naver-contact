@@ -7,6 +7,27 @@ export const supabase = supabaseUrl
   ? createClient(supabaseUrl, supabaseAnonKey)
   : (null as unknown as ReturnType<typeof createClient>);
 
+// Supabase는 단일 요청당 최대 1000행만 반환 (db.max-rows 기본값).
+// 페이지네이션으로 모든 행을 가져오는 헬퍼.
+type SupaQueryBuilder<T> = {
+  range: (from: number, to: number) => Promise<{ data: T[] | null; error: unknown }>;
+};
+
+export async function fetchAllRows<T>(
+  build: () => SupaQueryBuilder<T>,
+  pageSize = 1000,
+): Promise<T[]> {
+  const out: T[] = [];
+  for (let from = 0; ; from += pageSize) {
+    const { data, error } = await build().range(from, from + pageSize - 1);
+    if (error) throw error;
+    if (!data || data.length === 0) break;
+    out.push(...data);
+    if (data.length < pageSize) break;
+  }
+  return out;
+}
+
 // 타입 정의
 export interface Contact {
   id: string;
