@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabase, fetchAllRows } from '@/lib/supabase';
 import { requireAuth } from '@/lib/api-auth';
 import { apiError, ErrorCodes } from '@/lib/errors';
 import * as XLSX from 'xlsx';
