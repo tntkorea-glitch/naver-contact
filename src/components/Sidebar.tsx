@@ -46,6 +46,14 @@ export default function Sidebar({
   const [showNewGroup, setShowNewGroup] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
   const [newGroupColor, setNewGroupColor] = useState('#6366f1');
+  const { user, signOut } = useAuth();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    if (!confirm('로그아웃 하시겠습니까?')) return;
+    await signOut();
+    router.replace('/login');
+  };
 
   const handleCreate = () => {
     if (newGroupName.trim()) {
