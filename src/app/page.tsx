@@ -60,6 +60,21 @@ function ContactsApp() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
+  // Canvas로 텍스트 폭 측정 (한 번만 생성)
+  const measureTextWidth = useCallback((texts: string[], font: string) => {
+    if (typeof document === 'undefined' || texts.length === 0) return 0;
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return 0;
+    ctx.font = font;
+    let max = 0;
+    for (const t of texts) {
+      const w = ctx.measureText(t).width;
+      if (w > max) max = w;
+    }
+    return max;
+  }, []);
+
   // 사이드바 / 연락처 목록 리사이즈
   const [sidebarWidth, setSidebarWidth] = useState(256);
   const [listWidth, setListWidth] = useState(400);
