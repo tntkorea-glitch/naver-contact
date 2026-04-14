@@ -251,6 +251,9 @@ function ContactsApp() {
           onOpenImport={() => setShowImport(true)}
           onOpenExport={() => setShowExport(true)}
           onOpenDuplicates={() => setShowDuplicates(true)}
+          onCreateContact={() => { setEditingContact(null); setShowForm(true); }}
+          onSelectRecent={handleSelectRecent}
+          showRecent={showRecent}
         />
       </aside>
 
