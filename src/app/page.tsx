@@ -163,19 +163,28 @@ function ContactsApp() {
     setShowExport(false);
   };
 
-  const handleImport = async (file: File) => {
+  const importFetch = async (file: File, query: string) => {
     const token = await getAccessToken();
     const formData = new FormData();
     formData.append('file', file);
     const headers: Record<string, string> = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
-    const res = await fetch('/api/v1/contacts/import', { method: 'POST', headers, body: formData });
-    const data = await res.json();
-    if (data.data?.groups_created !== undefined) {
-      alert(`연락처 ${data.data.imported}개, 그룹 ${data.data.groups_created}개 가져왔습니다.`);
-    } else {
-      alert(`${data.data?.imported || 0}개의 연락처를 가져왔습니다.`);
-    }
+    const res = await fetch(`/api/v1/contacts/import${query}`, { method: 'POST', headers, body: formData });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json?.error?.message || `요청 실패 (${res.status})`);
+    return json.data;
+  };
+
+  const handleImportPreview = async (file: File) => {
+    return await importFetch(file, '?mode=preview');
+  };
+
+  const handleImportSave = async (file: File, skipDuplicates: boolean) => {
+    const data = await importFetch(file, `?mode=save&skipDuplicates=${skipDuplicates}`);
+    const parts = [`연락처 ${data.imported.toLocaleString()}건 등록`];
+    if (data.skipped) parts.push(`중복 ${data.skipped.toLocaleString()}건 제외`);
+    if (data.groups_created) parts.push(`그룹 ${data.groups_created}개 신규`);
+    alert(parts.join(' · '));
     setShowImport(false);
     fetchContacts();
     fetchGroups();
