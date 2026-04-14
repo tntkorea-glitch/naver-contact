@@ -30,10 +30,10 @@ export async function GET(request: NextRequest) {
   }
 
   if (mode === 'similar') {
-    return apiSuccess(findSimilar(contacts as Contact[]));
+    return apiSuccess(findSimilar(contacts));
   }
 
-  return apiSuccess(findExact(contacts as Contact[]));
+  return apiSuccess(findExact(contacts));
 }
 
 // 정확 일치: 이름 또는 전화번호 완전 일치
