@@ -355,7 +355,7 @@ function ContactsApp() {
           onCancel={() => { setShowForm(false); setEditingContact(null); }}
         />
       )}
-      {showImport && <ImportModal onImport={handleImport} onClose={() => setShowImport(false)} />}
+      {showImport && <ImportModal onPreview={handleImportPreview} onSave={handleImportSave} onClose={() => setShowImport(false)} />}
       {showDuplicates && (
         <DuplicatesModal
           onFetch={handleFetchDuplicates}
