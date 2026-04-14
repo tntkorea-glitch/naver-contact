@@ -39,6 +39,7 @@ export default function Sidebar({
   onSelectTrash, showTrash,
   onSelectNoName, showNoName,
   onOpenSettings, onOpenImport, onOpenExport, onOpenDuplicates,
+  onCreateContact, onSelectRecent, showRecent,
 }: SidebarProps) {
   const [showNewGroup, setShowNewGroup] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
