@@ -111,6 +111,7 @@ function SharesInner() {
       if (!res.ok) throw new Error(json?.error?.message || '연결 실패');
       setRedeemMsg({ kind: 'ok', text: '연결 성공! 잠시 후 메인 계정의 데이터가 보입니다.' });
       setRedeemCode('');
+      setMainLabelInput('');
       reload();
     } catch (e) {
       setRedeemMsg({ kind: 'err', text: e instanceof Error ? e.message : '오류' });
