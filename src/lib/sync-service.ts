@@ -44,7 +44,7 @@ export async function pullSync(
       // 로컬에 bulkPut (upsert)
       await db.contacts.bulkPut(data as LocalContact[]);
       loaded += data.length;
-      onProgress?.({ phase: 'contacts', loaded, total, message: `연락처 ${loaded.toLocaleString()}/${total.toLocaleString()}` });
+      onProgress?.({ phase: 'contacts', loaded, total: 0, message: `연락처 ${loaded.toLocaleString()}명 다운로드` });
 
       if (data.length < PAGE_SIZE) break;
       from += PAGE_SIZE;
