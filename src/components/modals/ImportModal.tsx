@@ -44,6 +44,7 @@ export default function ImportModal({ onPreview, onSave, onClose }: ImportModalP
       const result = await onPreview(f);
       if (!result) throw new Error('미리보기 실패');
       setPreview(result);
+      setTab(result.new_count > 0 ? 'new' : 'duplicate');
       setStep('review');
     } catch (err) {
       setErrMsg(err instanceof Error ? err.message : '파일 분석 중 오류');
