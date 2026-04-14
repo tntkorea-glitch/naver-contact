@@ -67,7 +67,8 @@ export async function POST(request: NextRequest) {
   // 각 incoming row 매칭 검사
   let dupCount = 0;
   let newCount = 0;
-  const samples: { incoming: ParsedRow; existing: ExistingContact; matchedBy: 'phone' | 'email' }[] = [];
+  const dupSamples: { incoming: ParsedRow; existing: ExistingContact; matchedBy: 'phone' | 'email' }[] = [];
+  const newSamples: ParsedRow[] = [];
 
   for (const row of rows) {
     const phoneMatch = phoneIdx.get(phoneKey(row.phone)) || phoneIdx.get(phoneKey(row.phone2));
@@ -78,11 +79,12 @@ export async function POST(request: NextRequest) {
       row._duplicate = true;
       row._matched_id = match.id;
       dupCount++;
-      if (samples.length < 50) {
-        samples.push({ incoming: row, existing: match, matchedBy: phoneMatch ? 'phone' : 'email' });
+      if (dupSamples.length < 50) {
+        dupSamples.push({ incoming: row, existing: match, matchedBy: phoneMatch ? 'phone' : 'email' });
       }
     } else {
       newCount++;
+      if (newSamples.length < 50) newSamples.push(row);
     }
   }
 
@@ -92,7 +94,8 @@ export async function POST(request: NextRequest) {
       total: rows.length,
       new_count: newCount,
       duplicate_count: dupCount,
-      duplicate_samples: samples.map(s => ({
+      new_samples: newSamples.map(pickPublic),
+      duplicate_samples: dupSamples.map(s => ({
         incoming: pickPublic(s.incoming),
         existing: s.existing,
         matched_by: s.matchedBy,
