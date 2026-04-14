@@ -101,12 +101,19 @@ function ContactsApp() {
     searchTimer.current = setTimeout(() => { setSearch(value); setPage(1); }, 300);
   };
 
-  const resetFilters = (overrides: Partial<{ group: string; favorites: boolean; trash: boolean; noName: boolean }> = {}) => {
+  const resetFilters = (overrides: Partial<{ group: string; favorites: boolean; trash: boolean; noName: boolean; recent: boolean }> = {}) => {
     setSelectedGroup(overrides.group ?? '');
     setShowFavorites(overrides.favorites ?? false);
     setShowTrash(overrides.trash ?? false);
     setShowNoName(overrides.noName ?? false);
+    setShowRecent(overrides.recent ?? false);
     setPage(1);
+  };
+
+  const handleSelectRecent = () => {
+    resetFilters({ recent: true });
+    setSortField('created_at');
+    setSortDirection('desc');
   };
 
   const handleSave = async (data: Omit<Partial<Contact>, 'groups'> & { groups?: string[] }) => {
