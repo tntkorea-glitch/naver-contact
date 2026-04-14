@@ -212,7 +212,7 @@ function SharesInner() {
                 {members.filter(m => !m.revoked_at).map(m => (
                   <li key={m.id} className="flex items-center justify-between px-3 py-2 bg-gray-50 rounded-lg">
                     <div className="min-w-0 flex-1">
-                      <div className="text-xs text-gray-700 truncate font-mono">{m.member_user_id}</div>
+                      <div className="text-sm font-medium text-gray-800 truncate">{m.member_label || '이름 없음'}</div>
                       <div className="text-[11px] text-gray-500">
                         {m.scope === 'all' ? '전체 공유' : `그룹 공유 (${m.groups.length}개)`}
                         {m.scope === 'groups' && m.groups.length > 0 && ` — ${m.groups.map(g => g.name).join(', ')}`}
