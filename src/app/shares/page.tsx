@@ -40,9 +40,11 @@ function SharesInner() {
   const [issuing, setIssuing] = useState(false);
   const [issuedCode, setIssuedCode] = useState<string | null>(null);
   const [issuedExpiresAt, setIssuedExpiresAt] = useState<string | null>(null);
+  const [memberLabelInput, setMemberLabelInput] = useState('');
 
   // 코드 redeem UI 상태
   const [redeemCode, setRedeemCode] = useState('');
+  const [mainLabelInput, setMainLabelInput] = useState('');
   const [redeeming, setRedeeming] = useState(false);
   const [redeemMsg, setRedeemMsg] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
 
