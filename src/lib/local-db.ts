@@ -28,7 +28,7 @@ export class NaverContactDB extends Dexie {
   sync_meta!: Table<SyncMeta, string>;
 
   constructor() {
-    super('naver-contact');
+    super('listica');
     this.version(1).stores({
       contacts: 'id, user_id, last_name, first_name, phone, email, favorite, updated_at, deleted_at',
       groups: 'id, user_id, name, updated_at, deleted_at',
