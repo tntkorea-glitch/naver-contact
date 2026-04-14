@@ -22,6 +22,13 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - 인증 bypass 적용 중 (테스트용, TODO: 나중에 복원)
 - 빌드 성공 + GitHub 푸시 완료
 - **xlsx import 중복검사 추가 (2026-04-14)** — preview/save 2단계, 매칭 기준=전화번호 끝8자리 + 이메일, 중복 제외 토글 + 비교 테이블 UI
+- **인증 복원 완료 (2026-04-14)** — Supabase Auth 진짜 동작, AuthGuard 로그인 필요
+- **구글 로그인 추가 (2026-04-14)** — Supabase native OAuth (NextAuth X). /auth/callback 페이지, signInWithGoogle, 카카오/네이버는 "준비중" alert
+- **RLS 적용 완료 (2026-04-14)** — contacts/groups/contact_groups 테이블에 auth.uid()::text = user_id 정책. supabase.ts 서버 환경에서는 service_role로 자동 분기
+- **모바일 반응형 (2026-04-14)** — lg: 1024px 기준. 모바일에서 사이드바 drawer / 리스트↔디테일 스택 전환
+- **본 계정 = 구글 계정** (85f67042-f584-493e-98d5-d695d27152e5). 이메일 계정은 삭제됨
+- **포트 고정** = localhost:**3006** (package.json dev/start)
+- **Vercel 배포 URL** = https://naver-contact.vercel.app
 
 ## Supabase 설정
 - Organization: milveus-glitch's Project (Pro Plan $25/월)
@@ -30,13 +37,13 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - 이메일 인증: 아직 비활성화 안 됨 (Supabase Auth 설정에서 Confirm email OFF 필요)
 
 ## Next up when resuming
-1. **Vercel 환경변수 설정** — NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
-2. **Vercel 배포 확인** — 프로덕션에서 정상 동작하는지 테스트
-3. **Supabase 이메일 인증 비활성화** — Auth > Providers > Email > Confirm email OFF
-4. **인증 bypass 제거** — AuthGuard, api-auth.ts에서 TODO 주석 부분 복원
-5. **핸드폰에서 실시간 동기화 테스트**
+1. **React Native(Expo) 앱 프로젝트 시작** — 새 폴더 `D:\dev\naver-contact-mobile`
+2. **앱 MVP**: 로그인 → 연락처 리스트/추가/수정 + 폰 기본 연락처 sync (1주)
+3. **Expo Go / EAS dev build 로 본인 폰 설치** — 앱스토어 승인 전에 즉시 사용
+4. **앱 polish + 앱스토어 심사 준비** (1~2주)
+5. **카카오/네이버 로그인** 실제 구현 (현재는 "준비중" alert만)
 6. **두번째 xlsx 파일 import** (92935659, 16,968건)
-7. **UI 개선** — 네이버 주소록 캡처 참고하여 디테일 다듬기
+7. **Realtime 디버깅** (지금은 새로고침/포커스 기반으로 작동 중)
 
-**Why:** 2026-04-14 새벽 작업 마무리. 인증 없이 테스트 가능한 상태. 네이버 기능 대부분 구현 완료.
-**How to apply:** Vercel 환경변수 설정 → 배포 확인 → 인증 복원 → 모바일 테스트 순서로 진행
+**Why:** 웹은 실사용 가능 상태. 최종 목표는 React Native 앱 + 앱스토어 배포 (다른 회원도 가입 사용).
+**How to apply:** 2번부터 새 프로젝트 시작. 공용 타입(src/lib/types.ts)을 모바일 앱에서도 import 가능하도록 공유 패키지로 뽑을지 검토.
