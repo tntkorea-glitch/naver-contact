@@ -60,21 +60,10 @@ export function useContacts(options: UseContactsOptions = {}) {
     fetchContacts();
   }, [fetchContacts]);
 
-  // Supabase Realtime 구독 (세션 붙으면 자동 수신)
-  useEffect(() => {
-    const channel = supabase
-      .channel('contacts-changes')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'contacts' },
-        () => { fetchContacts(); }
-      )
-      .subscribe();
+  // Realtime 구독은 RLS 환경에서 복잡한 이슈가 있어 현재 비활성.
+  // 대신 포커스/새로고침 기반으로 최신 데이터 반영.
 
-    return () => { supabase.removeChannel(channel); };
-  }, [fetchContacts]);
-
-  // 탭 포커스 시 자동 새로고침 (Realtime 보강 — 다른 기기에서 변경된 데이터 반영)
+  // 탭 포커스 시 자동 새로고침
   useEffect(() => {
     const onVisible = () => {
       if (document.visibilityState === 'visible') fetchContacts();
