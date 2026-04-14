@@ -21,6 +21,8 @@ interface Member {
   scope: 'all' | 'groups';
   created_at: string;
   revoked_at: string | null;
+  member_label: string | null;
+  main_label: string | null;
   groups: { id: string; name: string; color: string }[];
 }
 
