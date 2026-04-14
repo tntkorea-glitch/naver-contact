@@ -51,6 +51,14 @@ function ContactsApp() {
   const [showExport, setShowExport] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [isWide, setIsWide] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsWide(window.innerWidth >= 1024);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   // 사이드바 / 연락처 목록 리사이즈
   const [sidebarWidth, setSidebarWidth] = useState(256);
