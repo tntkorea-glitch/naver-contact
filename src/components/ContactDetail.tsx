@@ -94,8 +94,8 @@ export default function ContactDetail({ contact, onEdit, onDelete, onClose }: Co
         </div>
       </div>
 
-      {/* 본문: 좌(기본정보) / 우(고객 인사이트) — 넓은 화면에서만 2단 */}
-      <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] divide-y xl:divide-y-0 xl:divide-x divide-gray-100">
+      {/* 본문: 좌(기본정보 고정폭) / 우(고객 인사이트 가변폭) — 넓은 화면에서만 2단 */}
+      <div className="grid grid-cols-1 xl:grid-cols-[280px_minmax(0,1fr)] divide-y xl:divide-y-0 xl:divide-x divide-gray-100">
         {/* 좌측 — 기본 정보 */}
         <div>
           <div className="p-6 space-y-1">
