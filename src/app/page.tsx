@@ -20,6 +20,7 @@ import SyncBanner from '@/components/SyncBanner';
 export default function Home() {
   return (
     <AuthGuard>
+      <SyncBanner />
       <ContactsApp />
     </AuthGuard>
   );
