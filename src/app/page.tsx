@@ -51,24 +51,39 @@ function ContactsApp() {
   const [showExport, setShowExport] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
-  // 사이드바 리사이즈
+  // 사이드바 / 연락처 목록 리사이즈
   const [sidebarWidth, setSidebarWidth] = useState(256);
-  const resizing = useRef(false);
+  const [listWidth, setListWidth] = useState(400);
+  const resizingSidebar = useRef(false);
+  const resizingList = useRef(false);
+  const listAreaRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseDown = useCallback(() => {
-    resizing.current = true;
+  const handleSidebarMouseDown = useCallback(() => {
+    resizingSidebar.current = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  }, []);
+
+  const handleListMouseDown = useCallback(() => {
+    resizingList.current = true;
     document.body.style.cursor = 'col-resize';
     document.body.style.userSelect = 'none';
   }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!resizing.current) return;
-      const w = Math.min(Math.max(e.clientX, 180), 500);
-      setSidebarWidth(w);
+      if (resizingSidebar.current) {
+        const w = Math.min(Math.max(e.clientX, 180), 500);
+        setSidebarWidth(w);
+      } else if (resizingList.current && listAreaRef.current) {
+        const left = listAreaRef.current.getBoundingClientRect().left;
+        const w = Math.min(Math.max(e.clientX - left, 280), 800);
+        setListWidth(w);
+      }
     };
     const handleMouseUp = () => {
-      resizing.current = false;
+      resizingSidebar.current = false;
+      resizingList.current = false;
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
     };
