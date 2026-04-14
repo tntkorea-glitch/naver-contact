@@ -15,6 +15,7 @@ import ImportModal from '@/components/modals/ImportModal';
 import DuplicatesModal from '@/components/modals/DuplicatesModal';
 import ExportModal from '@/components/modals/ExportModal';
 import SettingsModal from '@/components/modals/SettingsModal';
+import SyncBanner from '@/components/SyncBanner';
 
 export default function Home() {
   return (
