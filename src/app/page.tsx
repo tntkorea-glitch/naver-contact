@@ -50,6 +50,7 @@ function ContactsApp() {
   const [showDuplicates, setShowDuplicates] = useState(false);
   const [showExport, setShowExport] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // 사이드바 / 연락처 목록 리사이즈
   const [sidebarWidth, setSidebarWidth] = useState(256);
