@@ -37,7 +37,7 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - 이메일 인증: 아직 비활성화 안 됨 (Supabase Auth 설정에서 Confirm email OFF 필요)
 
 ## Next up when resuming
-1. **React Native(Expo) 앱 프로젝트 시작** — 새 폴더 `D:\dev\naver-contact-mobile`
+1. **React Native(Expo) 앱 프로젝트 시작** — 새 폴더 `D:\dev\listica-mobile`
 2. **앱 MVP**: 로그인 → 연락처 리스트/추가/수정 + 폰 기본 연락처 sync (1주)
 3. **Expo Go / EAS dev build 로 본인 폰 설치** — 앱스토어 승인 전에 즉시 사용
 4. **앱 polish + 앱스토어 심사 준비** (1~2주)
