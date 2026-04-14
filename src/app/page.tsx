@@ -65,16 +65,20 @@ function ContactsApp() {
   const [listWidth, setListWidth] = useState(400);
   const resizingSidebar = useRef(false);
   const resizingList = useRef(false);
+  const userResizedSidebar = useRef(false);
+  const userResizedList = useRef(false);
   const listAreaRef = useRef<HTMLDivElement>(null);
 
   const handleSidebarMouseDown = useCallback(() => {
     resizingSidebar.current = true;
+    userResizedSidebar.current = true;
     document.body.style.cursor = 'col-resize';
     document.body.style.userSelect = 'none';
   }, []);
 
   const handleListMouseDown = useCallback(() => {
     resizingList.current = true;
+    userResizedList.current = true;
     document.body.style.cursor = 'col-resize';
     document.body.style.userSelect = 'none';
   }, []);
