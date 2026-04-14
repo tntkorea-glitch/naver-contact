@@ -261,23 +261,23 @@ function ContactsApp() {
         <Sidebar
           groups={groups}
           selectedGroup={selectedGroup}
-          onSelectGroup={wrapSidebarAction(id => resetFilters({ group: id }) as unknown as void) as unknown as (id: string) => void}
-          onSelectAll={wrapSidebarAction(() => resetFilters())}
-          onSelectFavorites={wrapSidebarAction(() => resetFilters({ favorites: true }))}
+          onSelectGroup={id => { resetFilters({ group: id }); closeSidebar(); }}
+          onSelectAll={w(() => resetFilters())}
+          onSelectFavorites={w(() => resetFilters({ favorites: true }))}
           showFavorites={showFavorites}
           totalContacts={total}
           onCreateGroup={createGroup}
           onDeleteGroup={deleteGroup}
-          onSelectTrash={wrapSidebarAction(() => resetFilters({ trash: true }))}
+          onSelectTrash={w(() => resetFilters({ trash: true }))}
           showTrash={showTrash}
-          onSelectNoName={wrapSidebarAction(() => resetFilters({ noName: true }))}
+          onSelectNoName={w(() => resetFilters({ noName: true }))}
           showNoName={showNoName}
-          onOpenSettings={wrapSidebarAction(() => setShowSettings(true))}
-          onOpenImport={wrapSidebarAction(() => setShowImport(true))}
-          onOpenExport={wrapSidebarAction(() => setShowExport(true))}
-          onOpenDuplicates={wrapSidebarAction(() => setShowDuplicates(true))}
-          onCreateContact={wrapSidebarAction(() => { setEditingContact(null); setShowForm(true); })}
-          onSelectRecent={wrapSidebarAction(handleSelectRecent)}
+          onOpenSettings={w(() => setShowSettings(true))}
+          onOpenImport={w(() => setShowImport(true))}
+          onOpenExport={w(() => setShowExport(true))}
+          onOpenDuplicates={w(() => setShowDuplicates(true))}
+          onCreateContact={w(() => { setEditingContact(null); setShowForm(true); })}
+          onSelectRecent={w(handleSelectRecent)}
           showRecent={showRecent}
         />
       </aside>
