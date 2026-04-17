@@ -21,14 +21,14 @@ export interface SyncMeta {
   updated_at: string;
 }
 
-export class NaverContactDB extends Dexie {
+export class ConticaDB extends Dexie {
   contacts!: Table<LocalContact, string>;
   groups!: Table<LocalGroup, string>;
   contact_groups!: Table<LocalContactGroup, [string, string]>;
   sync_meta!: Table<SyncMeta, string>;
 
   constructor() {
-    super('listica');
+    super('contica');
     this.version(1).stores({
       contacts: 'id, user_id, last_name, first_name, phone, email, favorite, updated_at, deleted_at',
       groups: 'id, user_id, name, updated_at, deleted_at',
@@ -38,7 +38,7 @@ export class NaverContactDB extends Dexie {
   }
 }
 
-export const db = new NaverContactDB();
+export const db = new ConticaDB();
 
 export async function clearLocalData() {
   await Promise.all([

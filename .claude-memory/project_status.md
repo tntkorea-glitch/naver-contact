@@ -1,6 +1,6 @@
 ---
 name: Project Status
-description: listica 프로젝트 현재 진행 상태 및 다음 작업
+description: contica 프로젝트 현재 진행 상태 및 다음 작업
 type: project
 originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 ---
@@ -28,7 +28,7 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - **모바일 반응형 (2026-04-14)** — lg: 1024px 기준. 모바일에서 사이드바 drawer / 리스트↔디테일 스택 전환
 - **본 계정 = 구글 계정** (85f67042-f584-493e-98d5-d695d27152e5). 이메일 계정은 삭제됨
 - **포트 고정** = localhost:**3006** (package.json dev/start)
-- **Vercel 배포 URL** = https://listica-contact.vercel.app (listica.vercel.app은 선점되어 있음. 나중에 listica.co.kr 도메인 구매 예정)
+- **Vercel 배포 URL** = https://contica-contact.vercel.app (contica.vercel.app은 선점되어 있음. 나중에 contica.co.kr 도메인 구매 예정)
 
 ## Supabase 설정
 - Organization: milveus-glitch's Project (Pro Plan $25/월)
@@ -39,7 +39,7 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 ## 진행 (2026-04-15 새 PC 이어서)
 - 새 PC(`C:\Users\a0109`) 셋업 완료: npm install, vercel env pull, gitleaks pre-commit
 - 웹 `npm run build` 성공 확인
-- **listica-mobile Expo 프로젝트 스캐폴딩 완료** (`D:\dev\listica-mobile`)
+- **contica-mobile Expo 프로젝트 스캐폴딩 완료** (`D:\dev\contica-mobile`)
   - Expo SDK 54 + blank-typescript + React Native 0.81
   - @supabase/supabase-js + AsyncStorage + react-native-url-polyfill
   - `src/lib/supabase.ts` — AsyncStorage 세션 저장
@@ -52,8 +52,8 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
   - `npx tsc --noEmit` 통과
 
 ## Next up when resuming
-1. **실기기에서 Expo Go 테스트** — `cd D:\dev\listica-mobile && npm start` → QR 스캔. 로그인·리스트 동작 확인
-2. **listica-mobile GitHub 원격 repo 생성 + push** (사용자 확인 후)
+1. **실기기에서 Expo Go 테스트** — `cd D:\dev\contica-mobile && npm start` → QR 스캔. 로그인·리스트 동작 확인
+2. **contica-mobile GitHub 원격 repo 생성 + push** (사용자 확인 후)
 3. **연락처 추가/수정 폼 화면** 구현
 4. **폰 기본 연락처 sync** (expo-contacts) — 가져오기/내보내기
 5. **Google OAuth 정리** — issue_oauth_tangled.md 참고 (Google Cloud Console 정리 후 Supabase Provider 재등록)

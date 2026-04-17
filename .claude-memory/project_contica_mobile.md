@@ -1,13 +1,13 @@
 ---
-name: listica-mobile (Expo 앱)
-description: listica React Native 앱의 프로젝트 위치·구조·실행법
+name: contica-mobile (Expo 앱)
+description: contica React Native 앱의 프로젝트 위치·구조·실행법
 type: project
 originSessionId: 4173b96c-4c1e-4cb4-b57e-ec4f523ce2bc
 ---
-listica 웹과 같은 Supabase 백엔드를 사용하는 Expo 모바일 앱.
+contica 웹과 같은 Supabase 백엔드를 사용하는 Expo 모바일 앱.
 
 ## 위치
-- 코드: `D:\dev\listica-mobile`
+- 코드: `D:\dev\contica-mobile`
 - 웹과는 별도 git 저장소 (2026-04-15 `git init`, 원격 repo 아직 없음)
 
 ## 스택
@@ -17,7 +17,7 @@ listica 웹과 같은 Supabase 백엔드를 사용하는 Expo 모바일 앱.
 
 ## 실행
 ```
-cd D:\dev\listica-mobile
+cd D:\dev\contica-mobile
 npm start         # Expo dev server + QR
 npm run android   # 에뮬레이터
 ```
@@ -36,4 +36,4 @@ npm run android   # 에뮬레이터
 - `App.tsx` — 세션 기반 라우팅 + 로그아웃
 
 **Why:** 앱스토어 배포용 RN 앱이 최종 목표. 메모리에 이미 #1 작업으로 명시돼있어서 스캐폴딩만 자동 진행.
-**How to apply:** 앱에 기능 추가할 때 웹 타입(`D:\dev\listica\src\lib\types.ts`)과 모바일 타입을 직접 sync. 양쪽 모두 커지면 shared 패키지 추출 검토.
+**How to apply:** 앱에 기능 추가할 때 웹 타입(`D:\dev\contica\src\lib\types.ts`)과 모바일 타입을 직접 sync. 양쪽 모두 커지면 shared 패키지 추출 검토.

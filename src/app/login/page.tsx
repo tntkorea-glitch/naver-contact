@@ -55,7 +55,7 @@ export default function LoginPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Listica</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Contica</h1>
           <p className="text-sm text-gray-500 mt-1">다중 기기 연락처 동기화</p>
         </div>
 
@@ -197,7 +197,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-6">
-          Listica · 다중 기기 연락처 동기화 서비스
+          Contica · 다중 기기 연락처 동기화 서비스
         </p>
       </div>
     </div>

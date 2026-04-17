@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Listica - 연락처 동기화',
-    short_name: 'Listica',
+    name: 'Contica - 연락처 동기화',
+    short_name: 'Contica',
     description: '다중 기기 간 연락처 실시간 동기화 서비스',
     start_url: '/',
     display: 'standalone',
