@@ -45,12 +45,14 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
   - useContacts: auth loading/session 대기 후 fetch (첫 렌더 401 회피)
   - api-auth.ts: `supabaseAdmin.auth.getUser()` → `fetch /auth/v1/user` REST 직접 호출 + 로컬 JWT decode 폴백
 - **프로덕션 테스트 완료**: contica.vercel.app에서 Google 로그인 + 연락처 31,164건 정상 조회
-- **모바일(contica-mobile) 실기기 환경 준비 중** (2026-04-19 늦밤):
+- **모바일(contica-mobile) 실기기 동작 확인 완료** (2026-04-19 늦밤):
   - `lib/supabase.ts` SSR crash 수정 (Expo Router pre-render 단계에서 AsyncStorage `window` 참조 이슈 — `typeof window !== 'undefined'` 분기 추가)
-  - Metro 서버 기동 확인 (http://192.168.0.30:8081 → 200)
-  - Expo Go QR 스캔 시 404 — 사용자 스크린샷은 `accounts.google.com/sig...` 404. 원인 추정: 앱 진입 과정에서 Google OAuth 자동 시도 (구 Client ID 때문) 또는 앱 번들 로드 실패. 아직 모바일 앱 내부 UI를 **본 적 없음**.
-  - 본 계정 비번 SQL로 설정 완료 (이메일/비번 로그인 대기)
-  - **⏳ 미완**: Expo Go 진입 성공 + 이메일+비번으로 본 계정 로그인 + 연락처 31,164건 조회 — 다음 세션 이어서
+  - Metro 기동 + Expo Go 실기기 접속 OK (http://192.168.0.30:8081)
+  - Google 로그인 버튼은 404 — `.env`의 구(삭제된) 프로젝트 Client ID 때문. **우회책: 이메일/비번 로그인**
+  - 본 계정 비번 SQL로 설정 (`update auth.users set encrypted_password = crypt(...)`) → Expo Go에서 이메일+비번 로그인 성공
+  - **연락처 31,164건 조회 확인 + pull-to-refresh로 웹↔모바일 동기화 확인** (웹에서 추가 → 모바일 당겨서 반영, 개수가 31,165로 증가)
+  - `app/(tabs)/index.tsx` 상단에 `{N}명의 연락처` 카운트 표시 추가 (웹의 사이드바 개수 표시 대체)
+  - ⚠️ **모바일 UI는 MVP 수준** — 웹의 사이드바(필터/그룹/휴지통/즐겨찾기/이름없는 연락처) 미구현. 다음 세션에 Drawer Navigation으로 추가 예정 (1~2시간)
 
 ## 진행 (2026-04-19) — OAuth 재셋팅 + Vercel/Supabase 브랜드 정리 완료
 - **Google Cloud**: 구 liketica/listica/contica 프로젝트 **전부 삭제** → 새 `contica` 프로젝트 단독 생성
@@ -97,8 +99,10 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 2. **⚠️ 본 계정 비밀번호 변경** — SQL로 임시 설정한 비밀번호가 대화 로그에 남을 수 있음. 앱에서 "비밀번호 변경" 또는 Supabase reset으로 새 값으로 교체.
 3. **Vercel Preview 환경 NEXT_PUBLIC_SUPABASE_ANON_KEY 추가** — CLI Preview 등록 실패 건. UI에서 수동 추가.
 4. **모바일 Google OAuth 재셋팅** — iOS/Android용 OAuth Client ID 새로 발급 (Google Cloud Console에서 번들 ID `com.tntkorea.conticamobile` + Android SHA-1). 완료 후 `.env` EXPO_PUBLIC_GOOGLE_*_CLIENT_ID 갱신.
-5. **폰 기본 연락처 실시간 동기화** (사용자 우선 요구) — expo-contacts로 iOS/Android 내장 연락처 읽기·쓰기 + 앱↔폰 양방향 sync. MVP는 "앱 포그라운드 복귀 시 diff sync", v2에서 native ContactsObserver로 실시간 감지 검토.
-6. **연락처 추가/수정 폼 화면** 구현 (모바일)
+5. **모바일 앱 사이드바(Drawer) 추가** (사용자 우선 요구) — 웹과 동일한 필터(전체/즐겨찾기/휴지통/이름없는) + 그룹 리스트. `@react-navigation/drawer` 설치 + app/(drawer)/ 재구성. 1~2시간.
+6. **Supabase Realtime 구독 구현** — 현재 pull-to-refresh로 동작 확인. 즉시 반영 원하면 postgres_changes 구독 추가.
+7. **폰 기본 연락처 실시간 동기화** (사용자 우선 요구) — expo-contacts로 iOS/Android 내장 연락처 읽기·쓰기 + 앱↔폰 양방향 sync. MVP는 "앱 포그라운드 복귀 시 diff sync", v2에서 native ContactsObserver로 실시간 감지 검토.
+8. **연락처 추가/수정 폼 화면** 구현 (모바일)
 7. **카카오/네이버 로그인** 실제 구현
 8. **Realtime 구독 추가** — 현재 postgres_changes 미구현. 웹/모바일 모두 새로고침/포커스 기반
 9. **`contica.co.kr` 도메인 구매** → Vercel 커스텀 도메인 연결 + OAuth origins 추가
