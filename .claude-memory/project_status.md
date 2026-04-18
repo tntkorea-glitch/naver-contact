@@ -47,9 +47,8 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - **프로덕션 테스트 완료**: contica.vercel.app에서 Google 로그인 + 연락처 31,164건 정상 조회
 - **모바일(contica-mobile) 실기기 테스트 완료**:
   - `lib/supabase.ts` SSR crash 수정 (Expo Router pre-render 단계에서 AsyncStorage `window` 참조 이슈 — `typeof window !== 'undefined'` 분기 추가)
-  - 본 계정에 비밀번호 SQL로 직접 설정 (`update auth.users set encrypted_password = crypt(...) where email = ...`) — 이메일/비번 로그인 가능하게
-  - Expo Go로 실기기 접속 → 본 계정 31,164건 정상 조회
-  - 모바일 Google OAuth는 미완 — `.env`의 Google Client ID들이 구 프로젝트(삭제됨) 것. iOS/Android용 새 Client 재발급 필요 (번들 ID + SHA-1 지문)
+  - 모바일 Google OAuth 404 발생 — `.env`의 Google Client ID들이 구(삭제된) 프로젝트 것이라 Google이 "없는 client"로 거부. iOS/Android용 새 Client 재발급 필요 (번들 `com.tntkorea.conticamobile` + SHA-1 지문)
+  - 우회: 본 계정에 비밀번호 SQL로 직접 설정 (`update auth.users set encrypted_password = crypt(...) where email = ...`) → 모바일에서 **이메일+비번으로 본 계정 로그인** → 31,164건 정상 조회
 
 ## 진행 (2026-04-19) — OAuth 재셋팅 + Vercel/Supabase 브랜드 정리 완료
 - **Google Cloud**: 구 liketica/listica/contica 프로젝트 **전부 삭제** → 새 `contica` 프로젝트 단독 생성
