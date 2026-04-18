@@ -28,13 +28,24 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - **모바일 반응형 (2026-04-14)** — lg: 1024px 기준. 모바일에서 사이드바 drawer / 리스트↔디테일 스택 전환
 - **본 계정 = 구글 계정** (85f67042-f584-493e-98d5-d695d27152e5). 이메일 계정은 삭제됨
 - **포트 고정** = localhost:**3006** (package.json dev/start)
-- **Vercel 배포 URL** = https://contica.vercel.app (2026-04-19 정리 완료. `contica.vercel.app`은 메모리 오기록과 달리 선점되지 않았음. 기존 `listica-contact.vercel.app`은 redirect로 전환. 나중에 `contica.co.kr` 도메인 구매 예정)
+- **Vercel 배포 URL** = https://contica.vercel.app (2026-04-19 정리 완료. `contica.vercel.app`은 선점되지 않았음 — 과거 메모리 오기록. 구 `listica-contact`/`naver-contact` alias는 제거 또는 rename. 나중에 `contica.co.kr` 도메인 구매 예정)
 
 ## Supabase 설정
 - Organization: milveus-glitch's Project (Pro Plan $25/월)
 - Project URL: https://krnpicwujfkvbymtecsf.supabase.co
 - Region: Northeast Asia (Seoul)
 - 이메일 인증: 아직 비활성화 안 됨 (Supabase Auth 설정에서 Confirm email OFF 필요)
+
+## 진행 (2026-04-19) — OAuth 재셋팅 + Vercel/Supabase 브랜드 정리 완료
+- **Google Cloud**: 구 liketica/listica/contica 프로젝트 **전부 삭제** → 새 `contica` 프로젝트 단독 생성
+  - OAuth consent screen External + Test user 등록
+  - OAuth 2.0 Web Client `Contica Web` 신규 발급
+    - JS origins: `http://localhost:3006`, `https://contica.vercel.app`
+    - Redirect URI: `https://krnpicwujfkvbymtecsf.supabase.co/auth/v1/callback`
+  - Client ID: `170510383236-dpi1hbihh8jv73ufcs2v9i1bgdm3i4af.apps.googleusercontent.com` (Secret은 메모리 미저장, Supabase에 직접 등록)
+- **Vercel 도메인 정리**: `naver-contact.vercel.app` → `contica.vercel.app`로 rename + Connect to Production. `listica-contact.vercel.app`/`contica-contact.vercel.app` alias 정리(제거됨)
+- **Supabase**: 프로젝트 이름 `listica` → `contica` 변경. Google Provider에 새 Client ID/Secret 등록 완료
+- **구글 로그인 테스트 성공**: localhost:3006에서 본 계정(`85f67042-...`) 복원 확인. 전체 연락처 **31,164명** (메모리 이전 기록 14,193에서 증가)
 
 ## 진행 (2026-04-18) — listica → contica 전체 리네임
 - **웹 리네임 완료** (`143c595` 푸시): package/UI 브랜드/Dexie DB 이름/메모리 파일 전부 listica→contica 치환
@@ -66,14 +77,13 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
   - `npx tsc --noEmit` 통과
 
 ## Next up when resuming
-0. **⚠️ 먼저 rename-to-contica.bat 실행 + GitHub/Vercel 대시보드 rename** (위 진행 2026-04-18 참고)
 1. **실기기에서 Expo Go 테스트** — `cd D:\dev\contica-mobile && npm start` → QR 스캔. 로그인·리스트 동작 확인
-2. **연락처 추가/수정 폼 화면** 구현
+2. **연락처 추가/수정 폼 화면** 구현 (모바일)
 3. **폰 기본 연락처 sync** (expo-contacts) — 가져오기/내보내기
-4. **Google OAuth 정리** — issue_oauth_tangled.md 참고 (Google Cloud Console 정리 후 Supabase Provider 재등록)
+4. **Vercel 배포에서 구글 로그인 동작 확인** — contica.vercel.app에서도 OAuth flow 테스트
 5. **카카오/네이버 로그인** 실제 구현
-6. **두번째 xlsx 파일 import** (92935659, 16,968건 — 사용자가 웹 UI에서 실행)
-7. **Realtime 구독 추가** — 현재 postgres_changes 미구현. 웹/모바일 모두 새로고침/포커스 기반
+6. **Realtime 구독 추가** — 현재 postgres_changes 미구현. 웹/모바일 모두 새로고침/포커스 기반
+7. **`contica.co.kr` 도메인 구매** → Vercel 커스텀 도메인 연결 + OAuth origins 추가
 
 **Why:** 웹은 실사용 가능 상태. 최종 목표는 React Native 앱 + 앱스토어 배포.
 **How to apply:** 모바일 앱 타입은 현재 수동 복제. 나중에 양쪽 모두 커지면 `packages/shared` 로 추출 검토.
