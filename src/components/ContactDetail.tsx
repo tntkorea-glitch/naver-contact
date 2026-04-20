@@ -1,10 +1,11 @@
 'use client';
 
-import { Contact } from '@/lib/supabase';
+import { Contact, Group } from '@/lib/supabase';
 import CustomerInsightsPanel from './CustomerInsights';
 
 interface ContactDetailProps {
   contact: Contact | null;
+  groups?: Group[];
   onEdit: () => void;
   onDelete: (id: string) => void;
   onClose: () => void;
