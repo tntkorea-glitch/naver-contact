@@ -23,7 +23,7 @@ function getInitials(contact: Contact): string {
   return '?';
 }
 
-export default function ContactDetail({ contact, onEdit, onDelete, onClose }: ContactDetailProps) {
+export default function ContactDetail({ contact, groups, onEdit, onDelete, onClose }: ContactDetailProps) {
   if (!contact) {
     return (
       <div className="flex-1 flex items-center justify-center bg-gray-50">
