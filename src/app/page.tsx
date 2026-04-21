@@ -398,9 +398,15 @@ function ContactsApp() {
                 <span className="hidden sm:inline">추가</span>
               </button>
             )}
-            <MoreMenu onExport={() => setShowExport(true)} onImport={() => setShowImport(true)} onCheckDuplicates={() => setShowDuplicates(true)} />
+            <MoreMenu onExport={() => setShowExport(true)} onImport={() => setShowImport(true)} onCheckDuplicates={() => { setDuplicatesAutoStart(false); setShowDuplicates(true); }} />
           </div>
         </header>
+
+        {/* 중복 연락처 알림 배너 */}
+        <DuplicateAlert
+          refreshKey={dupRefreshKey}
+          onOpen={() => { setDuplicatesAutoStart(true); setShowDuplicates(true); }}
+        />
 
         {/* 휴지통 안내 배너 */}
         {showTrash && (
