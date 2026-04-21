@@ -16,6 +16,7 @@ import DuplicatesModal from '@/components/modals/DuplicatesModal';
 import ExportModal from '@/components/modals/ExportModal';
 import SettingsModal from '@/components/modals/SettingsModal';
 import SyncBanner from '@/components/SyncBanner';
+import DuplicateAlert from '@/components/DuplicateAlert';
 
 export default function Home() {
   return (
