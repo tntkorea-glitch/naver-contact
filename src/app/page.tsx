@@ -260,6 +260,7 @@ function ContactsApp() {
       body: JSON.stringify({ primary_id: primaryId, merge_ids: contactIds.filter(id => id !== primaryId) }),
     });
     fetchContacts();
+    setDupRefreshKey(k => k + 1);
   };
 
   const toggleSelect = (id: string) => {
