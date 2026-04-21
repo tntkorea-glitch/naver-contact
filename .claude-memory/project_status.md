@@ -100,17 +100,14 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - **프로덕션 Google OAuth `deleted_client` 에러 진단**: 에러 URL의 `client_id=773222550757-j57q7seu6i932m7k833crdne1d86rui3...` 파라미터가 Google Cloud의 실제 값 `170510383236-dpi1hbihh8jv73ufcs2v9i1bgdm3i4af...`와 **완전히 다름**. **즉 Supabase Auth Providers의 Google Client ID에 구(삭제된) 값이 들어있음** — 사용자가 육안 확인 시 "다 맞음"이라 답했으나 실제 저장값 불일치. 다음 세션에 Supabase Auth Providers에서 ID/Secret 교체 필요.
 - **모바일 Drawer 사이드바** — 메모리에 "추가했었다"는 기록이 있었으나 실제론 미구현 확인 (`app/(drawer)/` 없음, drawer import 없음). 다음 세션 우선순위.
 
-## 진행 (2026-04-21) — Discover 스캔 에러 수정
+## 진행 (2026-04-21) — Discover 스캔 에러 수정 + OAuth 복구 + APK 재빌드
 - **phone-history 네이티브 모듈 버그 수정** (`f357702`): `getCallLog`/`getSmsLog`에서 `ContentResolver.query` sortOrder에 `"DATE DESC LIMIT N"` 형태로 LIMIT을 넣었던 것이 Android 11+(API 30)에서 `IllegalArgumentException: Invalid token LIMIT`로 거부됨. sortOrder는 `DATE DESC`만 남기고 cursor 루프에서 `results.size >= effectiveLimit` 조건으로 끊도록 변경.
-- ⚠️ **dev client APK 재빌드 필요** — 네이티브 코드 변경이라 JS 번들만으론 반영 안 됨. 다음 세션 최우선.
+- **dev client APK 재빌드 완료** — EAS development profile로 Android APK 빌드 (build ID `7e8406ab-dd69-4554-acd4-a3e397576cde`, fingerprint `53ccabf84cb31bf7e96b3f4a4d0deb47375a7664`, commit `f357702`). APK: https://expo.dev/artifacts/eas/gC7LuTurVMdyFJvTPY2KNw.apk. 폰에 설치 후 Discover 탭 스캔 실기기 테스트 필요.
+- **Supabase Auth Google Client ID/Secret 교체 완료** — 구 `773222550757-...` (삭제된 Google OAuth 앱) → 신규 `170510383236-dpi1hbihh8jv73ufcs2v9i1bgdm3i4af...` + Google Cloud `Contica Web`에서 새로 발급한 Secret로 교체. `contica.vercel.app` 프로덕션 Google 로그인 `deleted_client` 에러 해소.
 
 ## Next up when resuming
-1. **⚠️ contica-mobile dev client APK 재빌드** (최우선) — `f357702` 반영. `eas build --profile development --platform android` 또는 로컬 `npx expo run:android`. 재설치 후 Discover 탭 스캔 정상 동작 확인.
-2. **⚠️ Supabase Auth Providers → Google Client ID 교체** (프로덕션 로그인 차단 중)
-   - Google Cloud `Contica Web` → `+ Add secret`으로 새 Client Secret 발급
-   - Supabase Auth Providers → Google → Client ID = `170510383236-dpi1hbihh8jv73ufcs2v9i1bgdm3i4af.apps.googleusercontent.com`, Secret = 방금 발급값으로 교체 → Save
-   - 시크릿 창에서 `contica.vercel.app` Google 로그인 성공 확인
-2. **모바일 Realtime 구독 실기기 테스트** — OAuth 복구 후. 🟢 `실시간` 뱃지 노출 + 웹에서 추가 시 0.3초 내 자동 반영 확인
+1. **📱 새 APK 설치 + Discover 탭 실기기 테스트** — https://expo.dev/artifacts/eas/gC7LuTurVMdyFJvTPY2KNw.apk 를 폰에서 다운받아 설치 (기존 dev client 위에 덮어씌우기 OK). Metro dev server 기동 후 연결 → Discover 탭에서 통화/문자 스캔이 예외 없이 동작하는지 확인.
+2. **모바일 Realtime 구독 실기기 테스트** — OAuth 복구됐으니 이제 가능. 🟢 `실시간` 뱃지 노출 + 웹에서 추가 시 0.3초 내 자동 반영 확인
 3. **모바일 Drawer 사이드바 구현** (1~2시간) — `@react-navigation/drawer` 설치 + `app/(drawer)/` 재구성 + 필터(전체/즐겨찾기/휴지통/이름없는) + 그룹 리스트
 4. **⚠️ Supabase Service Role key Reset** — 이전 세션 대화 로그에 평문 노출된 상태. 재발급 → Vercel env 업데이트 → 재배포
 5. **⚠️ 본 계정 비밀번호 변경** — SQL로 임시 설정한 비밀번호가 대화 로그에 남을 수 있음
